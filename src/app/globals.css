@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: var(--font-playfair), Playfair Display, serif;
+  --font-sans: var(--font-inter), Inter, sans-serif;
+  
+  --color-primary: #0EA5E9;
+  --color-secondary: #2563EB;
+  --color-accent: #14B8A6;
+  --color-hospital-bg: #F6FAFD;
+  --color-navy-dark: #0A192F;
+  --color-navy-light: #1E293B;
+  
+  --radius-custom: 20px;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+}
+
+:root {
+  --background: #F6FAFD;
+  --foreground: #0A192F;
+}
+
+html {
+  scroll-behavior: smooth;
+  background-color: #F6FAFD;
+  color: #0A192F;
+}
+
+body {
+  background-color: #F6FAFD;
+  color: #0A192F;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+/* Glassmorphism ONLY allowed on hero cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px 0 rgba(14, 165, 233, 0.08);
+}
+
+/* Premium Card Shadows */
+.hospital-card {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.03), 0 2px 10px -2px rgba(15, 23, 42, 0.02);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hospital-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 35px -5px rgba(14, 165, 233, 0.08), 0 10px 20px -5px rgba(14, 165, 233, 0.03);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F6FAFD;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CBD5E1;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94A3B8;
+}
+
+/* Background grid and helix pattern */
+.medical-pattern-bg {
+  background-image: 
+    radial-gradient(rgba(14, 165, 233, 0.04) 1px, transparent 1px),
+    radial-gradient(rgba(20, 184, 166, 0.03) 1.5px, transparent 1.5px);
+  background-size: 24px 24px, 48px 48px;
+  background-position: 0 0, 12px 12px;
+}
