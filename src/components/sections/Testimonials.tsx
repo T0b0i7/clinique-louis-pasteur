@@ -2,60 +2,95 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Star, ChevronLeft, ChevronRight, Quote, ShieldCheck } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  BookOpen,
+  Clock,
+  ShieldCheck,
+  Phone,
+  LucideIcon,
+} from "lucide-react";
 
-interface Testimonial {
+interface GuideStep {
   id: number;
-  name: string;
-  condition: string;
-  quote: string;
-  rating: number;
-  date: string;
-  source: string;
+  title: string;
+  content: string;
+  icon: LucideIcon;
+  category: string;
 }
 
-const testimonials: Testimonial[] = [
+const guideSteps: GuideStep[] = [
   {
     id: 1,
-    name: "Eleanor Vance",
-    condition: "Cardiac Valve Replacement Recovery",
-    quote: "The clinical expertise of the cardiac team saved my life. The level of care I received, combined with the premium patient recovery rooms, felt like a luxury retreat. I am forever grateful to the nurses and doctors.",
-    rating: 5,
-    date: "2 weeks ago",
-    source: "Verified Google Review",
+    title: "Prendre rendez-vous",
+    category: "Rendez-vous",
+    content:
+      "L'accueil téléphonique est disponible 24h/24 et 7j/7 au +229 20 21 22 22 ou au +229 95 86 95 25, et par email à contact@cliniquelouispasteur.com. Les consultations et examens sont accessibles avec ou sans rendez-vous, mais prendre rendez-vous réduit l'attente et permet de choisir son praticien.",
+    icon: Phone,
   },
   {
     id: 2,
-    name: "Richard Thompson",
-    condition: "Complex Neuro-Spinal Rehabilitation",
-    quote: "I was told my mobility would be permanently impaired after my spinal injury. Dr. Chen's surgical intervention followed by intensive rehab allowed me to walk again. A world-class medical institution.",
-    rating: 5,
-    date: "1 month ago",
-    source: "Verified Google Review",
+    title: "Les étapes de votre visite",
+    category: "Accueil",
+    content:
+      "À votre arrivée, présentez-vous au service d'accueil et d'orientation. Réglez ensuite le service à la caisse, attendez votre tour dans l'espace prévu, puis rendez-vous chez le prestataire. Revenez à l'accueil pour les examens complémentaires ou les informations.",
+    icon: BookOpen,
   },
   {
     id: 3,
-    name: "Clara Miller",
-    condition: "Neonatal Intensive Care (NICU)",
-    quote: "Welcoming a premature baby is terrifying. The NICU team at MediCare provided state-of-the-art technological support while wrapping our family in profound empathy. Our daughter is thriving today.",
-    rating: 5,
-    date: "2 months ago",
-    source: "Verified Google Review",
+    title: "Rendre visite à un hospitalisé",
+    category: "Visites",
+    content:
+      "Les visites sont organisées en trois tranches : le matin de 7h30 à 9h, à midi de 12h à 14h et le soir de 18h30 à 21h. Merci de respecter ces horaires pour le repos des patients.",
+    icon: Clock,
+  },
+  {
+    id: 4,
+    title: "Faire une radiographie",
+    category: "Imagerie",
+    content:
+      "Les radiographies simples ne demandent aucune préparation. Vous pouvez vous présenter 24h/24 et 7j/7, avec ou sans rendez-vous. Pour les radiographies avec produit de contraste (HSG, UIV, UCR, TOGD, LB), il est préférable de prendre rendez-vous.",
+    icon: ShieldCheck,
+  },
+  {
+    id: 5,
+    title: "Faire une échographie",
+    category: "Imagerie",
+    content:
+      "Les échographies sont réalisées sur rendez-vous et nécessitent parfois de se présenter à jeun. Les résultats sont disponibles le même jour.",
+    icon: ShieldCheck,
+  },
+  {
+    id: 6,
+    title: "Faire des analyses de laboratoire",
+    category: "Laboratoire",
+    content:
+      "Les prélèvements sont effectués 24h/24 et 7j/7. Beaucoup d'examens demandent d'être à jeun. La plupart des résultats sont disponibles le même jour.",
+    icon: BookOpen,
+  },
+  {
+    id: 7,
+    title: "Régler votre prise en charge",
+    category: "Paiement",
+    content:
+      "Vous pouvez régler en espèces, par chèque ou par mobile banking. Pour les assurés, seul le tiers payant est exigé. En cas d'hospitalisation, une provision est demandée et un point financier est réalisé chaque jour.",
+    icon: ShieldCheck,
   },
 ];
 
 export default function Testimonials() {
   const [index, setIndex] = useState(0);
-  const [direction, setDirection] = useState(0); // -1 for left, 1 for right
+  const [direction, setDirection] = useState(0);
 
-  const nextTestimonial = () => {
+  const nextStep = () => {
     setDirection(1);
-    setIndex((prev) => (prev + 1) % testimonials.length);
+    setIndex((prev) => (prev + 1) % guideSteps.length);
   };
 
-  const prevTestimonial = () => {
+  const prevStep = () => {
     setDirection(-1);
-    setIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setIndex((prev) => (prev - 1 + guideSteps.length) % guideSteps.length);
   };
 
   const slideVariants = {
@@ -75,6 +110,7 @@ export default function Testimonials() {
     }),
   };
 
+  const CurrentIcon = guideSteps[index].icon;
 
   return (
     <section id="testimonials" className="py-24 md:py-32 bg-hospital-bg relative overflow-hidden">
@@ -82,60 +118,61 @@ export default function Testimonials() {
 
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
-          {/* Left Column: Google Ratings Panel */}
+          {/* Left Column: Guide Intro */}
           <div className="lg:col-span-5 flex flex-col items-start text-left select-none">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 rounded-full text-primary font-bold text-xs uppercase tracking-wider mb-4">
-              <span>Patient Testimonials</span>
+              <span>Guide du patient</span>
             </span>
-            
+
             <h2 className="font-serif text-4xl md:text-5xl font-bold text-navy-dark tracking-tight leading-[1.1] mb-6">
-              Stories of Healing,
+              Bien préparer
               <br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-sans font-medium italic">
-                Built on Trust.
+                votre visite.
               </span>
             </h2>
 
             <p className="text-xs md:text-sm text-navy-light leading-relaxed mb-8">
-              At MediCare, we believe in patient-centered recovery. Hear directly from our patients about their clinical journeys and experiences in our hospital.
+              Rendez-vous, visites, examens, paiement : retrouvez l&apos;essentiel des
+              informations pratiques publiées par la Clinique Louis Pasteur.
             </p>
 
-            {/* Google Rating Board */}
-            <div className="p-6 bg-white rounded-[20px] border border-slate-100 shadow-sm w-full flex items-center gap-5">
-              {/* Large number */}
-              <div className="flex flex-col items-center">
-                <span className="font-serif text-5xl font-black text-navy-dark">4.9</span>
-                <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mt-1">Rating</span>
-              </div>
-              <div className="h-12 w-px bg-slate-100" />
-              {/* Stars & Details */}
-              <div className="flex-1">
-                <div className="flex gap-1 text-amber-400 mb-2">
-                  <Star className="w-5 h-5 fill-amber-400" />
-                  <Star className="w-5 h-5 fill-amber-400" />
-                  <Star className="w-5 h-5 fill-amber-400" />
-                  <Star className="w-5 h-5 fill-amber-400" />
-                  <Star className="w-5 h-5 fill-amber-400" />
+            {/* Contact board */}
+            <div className="p-6 bg-white rounded-[20px] border border-slate-100 shadow-sm w-full">
+              <div className="flex items-center gap-4">
+                <div className="p-3 bg-primary/10 rounded-xl text-primary">
+                  <Phone className="w-5 h-5" />
                 </div>
-                <p className="text-[11px] text-navy-light font-medium flex items-center gap-1">
-                  <span>Based on 1,450+ verified Google Reviews</span>
-                  <ShieldCheck className="w-4 h-4 text-accent" />
-                </p>
+                <div>
+                  <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                    Accueil 24h/24
+                  </p>
+                  <a
+                    href="tel:+22920212222"
+                    className="font-serif text-xl font-bold text-navy-dark hover:text-primary transition-colors"
+                  >
+                    +229 20 21 22 22
+                  </a>
+                  <p className="text-[10px] text-slate-500 font-semibold mt-0.5">
+                    ou +229 95 86 95 25
+                  </p>
+                </div>
+              </div>
+              <div className="mt-4 pt-4 border-t border-slate-100 flex items-center gap-2 text-[11px] text-navy-light">
+                <Clock className="w-4 h-4 text-accent flex-shrink-0" />
+                <span className="font-medium">
+                  Visites : 7h30 à 9h, 12h à 14h, 18h30 à 21h
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Premium Interactive Carousel */}
-          <div className="lg:col-span-7 relative flex flex-col items-stretch h-[320px] sm:h-[280px]">
-            {/* Background decorative quote symbol */}
-            <div className="absolute top-0 left-4 text-slate-200/50 -z-10 select-none">
-              <Quote className="w-24 h-24 stroke-[1px]" />
-            </div>
-
+          {/* Right Column: Guide Carousel */}
+          <div className="lg:col-span-7 relative flex flex-col items-stretch h-[380px] sm:h-[320px]">
             <div className="flex-grow overflow-hidden relative w-full">
               <AnimatePresence custom={direction} mode="wait">
                 <motion.div
-                  key={testimonials[index].id}
+                  key={guideSteps[index].id}
                   custom={direction}
                   variants={slideVariants}
                   initial="enter"
@@ -144,38 +181,31 @@ export default function Testimonials() {
                   className="absolute inset-0 bg-white rounded-[20px] p-8 border border-slate-100 shadow-xl flex flex-col justify-between text-left select-none"
                 >
                   <div>
-                    {/* Stars */}
-                    <div className="flex gap-1 text-amber-400 mb-4">
-                      {Array.from({ length: testimonials[index].rating }).map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-amber-400" />
-                      ))}
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="p-2.5 bg-primary/10 rounded-xl text-primary">
+                        <CurrentIcon className="w-5 h-5" />
+                      </div>
+                      <span className="text-[10px] font-bold text-accent uppercase tracking-widest">
+                        {guideSteps[index].category}
+                      </span>
                     </div>
 
-                    {/* Review Quote */}
-                    <p className="text-xs md:text-sm text-navy-dark leading-relaxed font-medium mb-6">
-                      &ldquo;{testimonials[index].quote}&rdquo;
+                    <h3 className="font-serif text-xl md:text-2xl font-bold text-navy-dark mb-3">
+                      {guideSteps[index].title}
+                    </h3>
+
+                    <p className="text-xs md:text-sm text-navy-light leading-relaxed">
+                      {guideSteps[index].content}
                     </p>
                   </div>
 
-                  {/* Reviewer Details */}
-                  <div className="flex items-center justify-between border-t border-slate-100 pt-4 mt-auto">
-                    <div>
-                      <h4 className="font-serif text-sm font-bold text-navy-dark">
-                        {testimonials[index].name}
-                      </h4>
-                      <p className="text-[10px] font-bold text-accent uppercase tracking-wider mt-0.5">
-                        {testimonials[index].condition}
-                      </p>
-                    </div>
-
-                    <div className="text-right">
-                      <span className="text-[10px] font-semibold text-slate-400 block">
-                        {testimonials[index].source}
-                      </span>
-                      <span className="text-[10px] text-slate-400 font-bold tracking-wide mt-0.5 block">
-                        {testimonials[index].date}
-                      </span>
-                    </div>
+                  <div className="flex items-center justify-between border-t border-slate-100 pt-4 mt-6">
+                    <span className="text-[10px] font-semibold text-slate-400">
+                      Étape {index + 1} sur {guideSteps.length}
+                    </span>
+                    <span className="text-[10px] font-bold text-primary">
+                      Guide du patient
+                    </span>
                   </div>
                 </motion.div>
               </AnimatePresence>
@@ -184,16 +214,16 @@ export default function Testimonials() {
             {/* Slider Controls */}
             <div className="flex items-center justify-end gap-3 mt-6">
               <button
-                onClick={prevTestimonial}
+                onClick={prevStep}
                 className="p-3 bg-white border border-slate-150 hover:border-primary rounded-full hover:text-primary transition-all cursor-pointer shadow-sm"
-                aria-label="Previous review"
+                aria-label="Étape précédente"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
               <button
-                onClick={nextTestimonial}
+                onClick={nextStep}
                 className="p-3 bg-white border border-slate-150 hover:border-primary rounded-full hover:text-primary transition-all cursor-pointer shadow-sm"
-                aria-label="Next review"
+                aria-label="Étape suivante"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>

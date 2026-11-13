@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone, HeartPulse } from "lucide-react";
+import { Menu, X, Phone } from "lucide-react";
+import Image from "next/image";
 
 interface NavItem {
   label: string;
@@ -10,13 +11,13 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Departments", href: "#departments" },
-  { label: "Doctors", href: "#doctors" },
-  { label: "Why Us", href: "#why-choose-us" },
-  { label: "Packages", href: "#pricing" },
-  { label: "Reviews", href: "#testimonials" },
+  { label: "Accueil", href: "#home" },
+  { label: "La clinique", href: "#about" },
+  { label: "Spécialités", href: "#departments" },
+  { label: "Équipe", href: "#doctors" },
+  { label: "Pourquoi nous", href: "#why-choose-us" },
+  { label: "Assurances", href: "#pricing" },
+  { label: "Guide patient", href: "#testimonials" },
   { label: "FAQ", href: "#faq" },
 ];
 
@@ -27,10 +28,8 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Background color & blur state
       setIsScrolled(window.scrollY > 20);
 
-      // ScrollSpy logic
       const sections = navItems.map((item) => item.href.substring(1));
       sections.push("appointment", "contact");
 
@@ -39,7 +38,6 @@ export default function Navbar() {
         const el = document.getElementById(section);
         if (el) {
           const rect = el.getBoundingClientRect();
-          // If the top of the section is within the top portion of the screen
           if (rect.top <= 120 && rect.bottom >= 120) {
             currentActive = section;
             break;
@@ -50,7 +48,7 @@ export default function Navbar() {
     };
 
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -59,7 +57,7 @@ export default function Navbar() {
     const targetId = href.substring(1);
     const element = document.getElementById(targetId);
     if (element) {
-      const offset = 80; // height of navbar
+      const offset = 80;
       const bodyRect = document.body.getBoundingClientRect().top;
       const elementRect = element.getBoundingClientRect().top;
       const elementPosition = elementRect - bodyRect;
@@ -80,11 +78,11 @@ export default function Navbar() {
         transition={{ duration: 0.5 }}
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/80 backdrop-blur-md border-b border-slate-100 shadow-sm py-4"
-            : "bg-transparent py-6"
+            ? "bg-white/85 backdrop-blur-md border-b border-slate-100 shadow-sm py-3"
+            : "bg-transparent py-5"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between gap-4">
           {/* Logo */}
           <a
             href="#home"
@@ -92,18 +90,27 @@ export default function Navbar() {
               e.preventDefault();
               handleNavClick("#home");
             }}
-            className="flex items-center gap-2 group select-none"
+            className="flex items-center gap-2.5 group select-none flex-shrink-0"
           >
-            <div className="p-2 bg-primary/10 rounded-xl group-hover:bg-primary/20 transition-colors">
-              <HeartPulse className="w-6 h-6 text-primary" />
+            <div className="p-1.5 bg-white rounded-xl border border-slate-100 shadow-sm group-hover:shadow-md transition-all">
+              <Image
+                src="/images/logo-clp.png"
+                alt="Logo Clinique Louis Pasteur"
+                width={36}
+                height={36}
+                className="w-8 h-8 object-contain"
+              />
             </div>
-            <span className="font-serif text-2xl font-bold text-navy-dark tracking-wide">
-              Medi<span className="text-primary font-sans font-medium">Care</span>
+            <span className="font-serif text-base sm:text-lg xl:text-xl font-bold text-navy-dark leading-tight">
+              Clinique
+              <span className="block text-primary font-sans font-semibold text-[11px] sm:text-xs tracking-wide uppercase">
+                Louis Pasteur
+              </span>
             </span>
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-1">
+          <div className="hidden xl:flex items-center gap-0.5">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.substring(1);
               return (
@@ -114,7 +121,7 @@ export default function Navbar() {
                     e.preventDefault();
                     handleNavClick(item.href);
                   }}
-                  className={`relative px-4 py-2 text-sm font-semibold transition-colors duration-300 rounded-lg hover:text-primary ${
+                  className={`relative px-3 py-2 text-[13px] font-semibold transition-colors duration-300 rounded-lg hover:text-primary whitespace-nowrap ${
                     isActive ? "text-primary" : "text-navy-light"
                   }`}
                 >
@@ -122,7 +129,7 @@ export default function Navbar() {
                   {isActive && (
                     <motion.div
                       layoutId="activeIndicator"
-                      className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full"
+                      className="absolute bottom-0 left-3 right-3 h-0.5 bg-gradient-to-r from-primary to-secondary rounded-full"
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -132,28 +139,28 @@ export default function Navbar() {
           </div>
 
           {/* CTA & Emergency Buttons */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3 flex-shrink-0">
             <a
-              href="tel:18005550199"
-              className="flex items-center gap-1.5 px-3.5 py-2 border border-red-100 hover:border-red-200 bg-red-50/30 hover:bg-red-50/60 rounded-full text-red-600 font-bold text-xs uppercase tracking-wide transition-colors group"
+              href="tel:+22995621564"
+              className="flex items-center gap-1.5 px-3.5 py-2 border border-red-100 hover:border-red-200 bg-red-50/40 hover:bg-red-50/70 rounded-full text-red-600 font-bold text-[11px] uppercase tracking-wide transition-colors group whitespace-nowrap"
             >
               <Phone className="w-3.5 h-3.5 group-hover:animate-bounce" />
-              <span>ER Desk: 1-800-555-0199</span>
+              <span>Ambulance : 95 62 15 64</span>
             </a>
 
             <button
               onClick={() => handleNavClick("#appointment")}
-              className="px-5 py-2.5 bg-primary hover:bg-secondary text-white font-semibold text-sm rounded-full shadow-md hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
+              className="px-5 py-2.5 bg-primary hover:bg-secondary text-white font-semibold text-sm rounded-full shadow-md hover:shadow-primary/20 hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer whitespace-nowrap"
             >
-              Book Appointment
+              Prendre rendez-vous
             </button>
           </div>
 
           {/* Mobile Menu Trigger */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 lg:hidden hover:bg-slate-100 rounded-xl text-navy-dark focus:outline-none transition-colors"
-            aria-label="Toggle menu"
+            className="p-2 xl:hidden hover:bg-slate-100 rounded-xl text-navy-dark focus:outline-none transition-colors"
+            aria-label="Ouvrir le menu"
           >
             {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -167,9 +174,9 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="fixed top-[73px] left-0 right-0 z-30 bg-white border-b border-slate-100 shadow-xl overflow-hidden lg:hidden"
+            className="fixed top-[73px] left-0 right-0 z-30 bg-white border-b border-slate-100 shadow-xl overflow-hidden xl:hidden max-h-[calc(100vh-73px)] overflow-y-auto"
           >
-            <div className="px-6 py-8 flex flex-col gap-4">
+            <div className="px-6 py-8 flex flex-col gap-2">
               {navItems.map((item) => {
                 const isActive = activeSection === item.href.substring(1);
                 return (
@@ -191,23 +198,27 @@ export default function Navbar() {
                 );
               })}
 
-              <div className="h-px bg-slate-100 my-2" />
+              <div className="h-px bg-slate-100 my-3" />
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3">
                 <a
-                  href="tel:18005550199"
+                  href="tel:+22995621564"
                   className="flex items-center justify-center gap-2 py-3.5 border border-red-200 bg-red-50 text-red-600 rounded-xl font-bold uppercase tracking-wide text-xs"
                 >
                   <Phone className="w-4 h-4" />
-                  <span>ER Hotline: 1-800-555-0199</span>
+                  <span>Ambulance : 95 62 15 64</span>
                 </a>
                 <button
                   onClick={() => handleNavClick("#appointment")}
                   className="w-full py-3.5 bg-primary hover:bg-secondary text-white font-bold rounded-xl text-center text-sm shadow-md"
                 >
-                  Book Appointment
+                  Prendre rendez-vous
                 </button>
               </div>
+
+              <p className="text-[11px] text-slate-500 text-center mt-2">
+                Accueil téléphonique 24h/24 : +229 20 21 22 22
+              </p>
             </div>
           </motion.div>
         )}

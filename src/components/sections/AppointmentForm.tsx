@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Clock, Sparkles, CheckCircle, Info } from "lucide-react";
+import { Sparkles, CheckCircle, Info, Send, Phone } from "lucide-react";
 
 interface AppointmentFormProps {
   selectedDoctorName: string;
@@ -10,19 +10,41 @@ interface AppointmentFormProps {
 }
 
 interface BookingSuccess {
-  referenceId: string;
   name: string;
   doctor: string;
   department: string;
   date: string;
+  mailto: string;
 }
 
+const departments = [
+  { id: "cardiologie", label: "Cardiologie" },
+  { id: "gynecologie", label: "Gynécologie obstétrique" },
+  { id: "pediatrie", label: "Pédiatrie néonatologie" },
+  { id: "chirurgie", label: "Chirurgie générale" },
+  { id: "medecine-generale", label: "Médecine générale" },
+  { id: "neurochirurgie", label: "Neurochirurgie" },
+  { id: "orl", label: "ORL et chirurgie maxillo-faciale" },
+  { id: "urologie", label: "Urologie" },
+  { id: "radiologie", label: "Radiologie et échographie" },
+  { id: "laboratoire", label: "Laboratoire d'analyses" },
+  { id: "maternite", label: "Maternité et sage-femme" },
+  { id: "hospitalisation", label: "Hospitalisation et soins" },
+  { id: "emi-canada", label: "Examens d'immigration Canada" },
+];
+
 const doctorToDepartment: Record<string, string> = {
-  "Dr. Sarah Jenkins": "cardiology",
-  "Dr. Michael Chen": "neurology",
-  "Dr. Aria Rodriguez": "pediatrics",
-  "Dr. David Vance": "orthopedics",
+  "Dr Lassissi Moufidathou Laï": "cardiologie",
+  "Dr Fatoki Abinu Heny": "gynecologie",
+  "Dr Bacharou Salwane": "pediatrie",
+  "Dr Goudou Rolland": "chirurgie",
+  "Dr Olory-Togbe Régis": "neurochirurgie",
+  "Dr Amoussou Léonel": "orl",
+  "Dr Gouissi Augustin": "urologie",
+  "Dr Dossou-Gbete Véronique": "emi-canada",
 };
+
+const doctorOptions = Object.keys(doctorToDepartment);
 
 export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorName }: AppointmentFormProps) {
   const [formData, setFormData] = useState({
@@ -37,7 +59,6 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successData, setSuccessData] = useState<BookingSuccess | null>(null);
-
 
   // Sync passed doctor selection with form state
   useEffect(() => {
@@ -70,18 +91,38 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate database write
     setTimeout(() => {
+      const departmentLabel =
+        departments.find((d) => d.id === formData.department)?.label || "Non précisée";
+      const doctorLabel = formData.doctor || "Peu importe";
+
+      const body = [
+        "Demande de rendez-vous depuis le site de la Clinique Louis Pasteur",
+        "",
+        `Nom : ${formData.name}`,
+        `Téléphone : ${formData.phone}`,
+        `Email : ${formData.email}`,
+        `Spécialité : ${departmentLabel}`,
+        `Médecin : ${doctorLabel}`,
+        `Date souhaitée : ${formData.date}`,
+        "",
+        "Message :",
+        formData.message || "Aucun message",
+      ].join("\n");
+
+      const mailto = `mailto:contact@cliniquelouispasteur.com?subject=${encodeURIComponent(
+        "Demande de rendez-vous"
+      )}&body=${encodeURIComponent(body)}`;
+
       setIsSubmitting(false);
       setSuccessData({
-        referenceId: `MC-${Math.floor(100000 + Math.random() * 900000)}`,
         name: formData.name,
-        doctor: formData.doctor || "Assigned Specialist",
-        department: formData.department ? formData.department.charAt(0).toUpperCase() + formData.department.slice(1) : "General Practice",
+        doctor: doctorLabel,
+        department: departmentLabel,
         date: formData.date,
+        mailto,
       });
 
-      // Clear form
       setFormData({
         name: "",
         phone: "",
@@ -92,7 +133,7 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
         message: "",
       });
       setSelectedDoctorName("");
-    }, 1500);
+    }, 700);
   };
 
   return (
@@ -103,29 +144,32 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
 
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-stretch">
-          
-          {/* Left Column: Information Panel & SVG Illustration */}
+          {/* Left Column: Information Panel & Illustration */}
           <div className="lg:col-span-5 flex flex-col justify-between text-left select-none">
             <div>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 rounded-full text-primary font-bold text-xs uppercase tracking-wider mb-4">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span>Scheduling Desk</span>
+                <span>Prise de rendez-vous</span>
               </span>
 
               <h2 className="font-serif text-4xl md:text-5xl font-bold text-navy-dark tracking-tight leading-[1.1] mb-6">
-                Book Your Private
+                Demandez votre
                 <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-sans font-medium italic">
-                  Clinical Session.
+                  rendez-vous.
                 </span>
               </h2>
 
+              <p className="text-xs md:text-sm text-navy-light leading-relaxed mb-4">
+                Remplissez le formulaire ci-contre. Vous pourrez envoyer votre demande par
+                email ou appeler directement la clinique pour une confirmation immédiate.
+              </p>
               <p className="text-xs md:text-sm text-navy-light leading-relaxed mb-8">
-                Confirm your slot instantly with our automated coordination system. Once booked, an onboarding specialist will call you to finalize clinical files and records.
+                L&apos;accueil téléphonique est disponible 24h/24 et 7j/7.
               </p>
             </div>
 
-            {/* Premium Stylized Illustration */}
+            {/* Stylized Illustration */}
             <div className="relative flex-grow flex items-center justify-center my-8 aspect-[4/3] max-w-[380px] mx-auto lg:mx-0">
               <svg viewBox="0 0 200 200" className="w-full h-full text-primary/10" fill="currentColor">
                 <circle cx="100" cy="100" r="80" className="text-slate-50" />
@@ -145,11 +189,13 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
             <div className="space-y-4 pt-6 border-t border-slate-100">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-primary/10 rounded-xl text-primary">
-                  <Clock className="w-4 h-4" />
+                  <Phone className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-navy-dark leading-none">Instant E-Receipt</h4>
-                  <p className="text-[10px] text-slate-400 mt-1 font-semibold">Booking ID sent directly to your inbox</p>
+                  <h4 className="text-xs font-bold text-navy-dark leading-none">Accueil 24h/24</h4>
+                  <p className="text-[10px] text-slate-400 mt-1 font-semibold">
+                    +229 20 21 22 22 ou +229 95 86 95 25
+                  </p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -157,17 +203,18 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
                   <Info className="w-4 h-4" />
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-navy-dark leading-none">No Fees Upfront</h4>
-                  <p className="text-[10px] text-slate-400 mt-1 font-semibold">Verify coverage and pay on check-in</p>
+                  <h4 className="text-xs font-bold text-navy-dark leading-none">Sans frais en ligne</h4>
+                  <p className="text-[10px] text-slate-400 mt-1 font-semibold">
+                    Le règlement se fait à la clinique
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Interactive Booking Form */}
+          {/* Right Column: Booking Form */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             <div className="bg-slate-50 border border-slate-100 p-8 rounded-[20px] shadow-sm select-none relative min-h-[550px] flex flex-col justify-center">
-              
               <AnimatePresence mode="wait">
                 {!successData ? (
                   <motion.form
@@ -182,12 +229,12 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
                       {/* Name */}
                       <div className="flex flex-col">
                         <label className="text-[10px] uppercase font-bold tracking-wider text-navy-light mb-2">
-                          Your Full Name
+                          Nom complet
                         </label>
                         <input
                           type="text"
                           required
-                          placeholder="e.g. John Doe"
+                          placeholder="Votre nom et prénom"
                           value={formData.name}
                           onChange={(e) => handleInputChange("name", e.target.value)}
                           className="px-4 py-3 border border-slate-200 focus:border-primary bg-white rounded-xl text-xs font-semibold text-navy-dark focus:outline-none transition-all"
@@ -197,12 +244,12 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
                       {/* Phone */}
                       <div className="flex flex-col">
                         <label className="text-[10px] uppercase font-bold tracking-wider text-navy-light mb-2">
-                          Phone Number
+                          Téléphone
                         </label>
                         <input
                           type="tel"
                           required
-                          placeholder="e.g. +1 (555) 019-9000"
+                          placeholder="+229 ..."
                           value={formData.phone}
                           onChange={(e) => handleInputChange("phone", e.target.value)}
                           className="px-4 py-3 border border-slate-200 focus:border-primary bg-white rounded-xl text-xs font-semibold text-navy-dark focus:outline-none transition-all"
@@ -214,12 +261,12 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
                       {/* Email */}
                       <div className="flex flex-col">
                         <label className="text-[10px] uppercase font-bold tracking-wider text-navy-light mb-2">
-                          Email Address
+                          Adresse email
                         </label>
                         <input
                           type="email"
                           required
-                          placeholder="john@example.com"
+                          placeholder="vous@exemple.com"
                           value={formData.email}
                           onChange={(e) => handleInputChange("email", e.target.value)}
                           className="px-4 py-3 border border-slate-200 focus:border-primary bg-white rounded-xl text-xs font-semibold text-navy-dark focus:outline-none transition-all"
@@ -229,7 +276,7 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
                       {/* Preferred Date */}
                       <div className="flex flex-col">
                         <label className="text-[10px] uppercase font-bold tracking-wider text-navy-light mb-2">
-                          Preferred Date
+                          Date souhaitée
                         </label>
                         <input
                           type="date"
@@ -245,7 +292,7 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
                       {/* Department Select */}
                       <div className="flex flex-col">
                         <label className="text-[10px] uppercase font-bold tracking-wider text-navy-light mb-2">
-                          Department Division
+                          Spécialité ou service
                         </label>
                         <select
                           required
@@ -253,33 +300,31 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
                           onChange={(e) => handleInputChange("department", e.target.value)}
                           className="px-4 py-3 border border-slate-200 focus:border-primary bg-white rounded-xl text-xs font-semibold text-navy-dark focus:outline-none transition-all cursor-pointer"
                         >
-                          <option value="">Choose department...</option>
-                          <option value="cardiology">Cardiology</option>
-                          <option value="neurology">Neurology</option>
-                          <option value="orthopedics">Orthopedics</option>
-                          <option value="pediatrics">Pediatrics</option>
-                          <option value="dermatology">Dermatology</option>
-                          <option value="radiology">Radiology</option>
-                          <option value="emergency">Emergency Care</option>
-                          <option value="general-medicine">General Medicine</option>
+                          <option value="">Choisir une spécialité...</option>
+                          {departments.map((dept) => (
+                            <option key={dept.id} value={dept.id}>
+                              {dept.label}
+                            </option>
+                          ))}
                         </select>
                       </div>
 
                       {/* Doctor Select */}
                       <div className="flex flex-col">
                         <label className="text-[10px] uppercase font-bold tracking-wider text-navy-light mb-2">
-                          Specialist Doctor
+                          Médecin
                         </label>
                         <select
                           value={formData.doctor}
                           onChange={(e) => handleDoctorChange(e.target.value)}
                           className="px-4 py-3 border border-slate-200 focus:border-primary bg-white rounded-xl text-xs font-semibold text-navy-dark focus:outline-none transition-all cursor-pointer"
                         >
-                          <option value="">Choose doctor (optional)...</option>
-                          <option value="Dr. Sarah Jenkins">Dr. Sarah Jenkins (Cardiology)</option>
-                          <option value="Dr. Michael Chen">Dr. Michael Chen (Neurology)</option>
-                          <option value="Dr. Aria Rodriguez">Dr. Aria Rodriguez (Pediatrics)</option>
-                          <option value="Dr. David Vance">Dr. David Vance (Orthopedics)</option>
+                          <option value="">Peu importe</option>
+                          {doctorOptions.map((doctor) => (
+                            <option key={doctor} value={doctor}>
+                              {doctor}
+                            </option>
+                          ))}
                         </select>
                       </div>
                     </div>
@@ -287,12 +332,12 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
                     {/* Message Area */}
                     <div className="flex flex-col">
                       <label className="text-[10px] uppercase font-bold tracking-wider text-navy-light mb-2">
-                        Message / Clinical Notes
+                        Message
                       </label>
                       <textarea
                         id="appointment-message"
                         rows={4}
-                        placeholder="Write details of package, conditions, or doctor requests..."
+                        placeholder="Précisez votre demande, vos disponibilités ou votre couverture d'assurance..."
                         value={formData.message}
                         onChange={(e) => handleInputChange("message", e.target.value)}
                         className="px-4 py-3 border border-slate-200 focus:border-primary bg-white rounded-xl text-xs font-semibold text-navy-dark focus:outline-none transition-all resize-none"
@@ -308,12 +353,17 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
                       {isSubmitting ? (
                         <>
                           <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                          <span>Generating Reservation...</span>
+                          <span>Préparation de la demande...</span>
                         </>
                       ) : (
-                        <span>Confirm Appointment Slots</span>
+                        <span>Préparer ma demande de rendez-vous</span>
                       )}
                     </button>
+
+                    <p className="text-[10px] text-slate-400 text-center leading-relaxed">
+                      Ce formulaire ne réserve pas automatiquement un créneau. Votre demande
+                      est confirmée par téléphone ou par email par la clinique.
+                    </p>
                   </motion.form>
                 ) : (
                   <motion.div
@@ -329,57 +379,73 @@ export default function AppointmentForm({ selectedDoctorName, setSelectedDoctorN
 
                     <div>
                       <h3 className="font-serif text-2xl font-bold text-navy-dark">
-                        Booking Successful!
+                        Votre demande est prête
                       </h3>
-                      <p className="text-xs text-navy-light mt-1">
-                        Your slot has been reserved. Please keep the reference code below.
+                      <p className="text-xs text-navy-light mt-1 max-w-sm mx-auto">
+                        Envoyez-la par email ou appelez la clinique pour confirmer votre
+                        rendez-vous.
                       </p>
                     </div>
 
-                    {/* Reference Card */}
+                    {/* Summary Card */}
                     <div className="bg-white border border-slate-100 p-6 rounded-2xl shadow-sm text-left max-w-sm mx-auto space-y-4">
                       <div className="flex justify-between items-center pb-2 border-b border-slate-100">
-                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Reference ID</span>
-                        <span className="font-mono font-black text-sm text-primary">{successData.referenceId}</span>
+                        <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                          Récapitulatif
+                        </span>
+                        <span className="font-mono font-black text-sm text-primary">
+                          Demande
+                        </span>
                       </div>
-                      
+
                       <div className="space-y-2">
-                        <div className="flex justify-between text-xs">
-                          <span className="text-slate-400 font-semibold">Patient:</span>
-                          <span className="font-bold text-navy-dark">{successData.name}</span>
+                        <div className="flex justify-between gap-4 text-xs">
+                          <span className="text-slate-400 font-semibold">Patient :</span>
+                          <span className="font-bold text-navy-dark text-right">{successData.name}</span>
                         </div>
-                        <div className="flex justify-between text-xs">
-                          <span className="text-slate-400 font-semibold">Specialist:</span>
-                          <span className="font-bold text-navy-dark">{successData.doctor}</span>
+                        <div className="flex justify-between gap-4 text-xs">
+                          <span className="text-slate-400 font-semibold">Médecin :</span>
+                          <span className="font-bold text-navy-dark text-right">{successData.doctor}</span>
                         </div>
-                        <div className="flex justify-between text-xs">
-                          <span className="text-slate-400 font-semibold">Department:</span>
-                          <span className="font-bold text-navy-dark">{successData.department}</span>
+                        <div className="flex justify-between gap-4 text-xs">
+                          <span className="text-slate-400 font-semibold">Spécialité :</span>
+                          <span className="font-bold text-navy-dark text-right">{successData.department}</span>
                         </div>
-                        <div className="flex justify-between text-xs">
-                          <span className="text-slate-400 font-semibold">Scheduled Date:</span>
+                        <div className="flex justify-between gap-4 text-xs">
+                          <span className="text-slate-400 font-semibold">Date :</span>
                           <span className="font-bold text-navy-dark">{successData.date}</span>
                         </div>
                       </div>
                     </div>
 
-                    <p className="text-[10px] text-slate-400 font-medium max-w-xs mx-auto">
-                      An email confirmation has been dispatched. Our desk will contact you via phone shortly.
-                    </p>
+                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                      <a
+                        href={successData.mailto}
+                        className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-primary hover:bg-secondary text-white font-bold text-xs rounded-xl transition-colors"
+                      >
+                        <Send className="w-4 h-4" />
+                        Envoyer par email
+                      </a>
+                      <a
+                        href="tel:+22920212222"
+                        className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-white border border-slate-200 hover:border-primary hover:text-primary text-navy-dark font-bold text-xs rounded-xl transition-colors"
+                      >
+                        <Phone className="w-4 h-4" />
+                        Appeler la clinique
+                      </a>
+                    </div>
 
                     <button
                       onClick={() => setSuccessData(null)}
-                      className="px-6 py-3 bg-slate-100 hover:bg-slate-200 text-navy-dark font-bold text-xs uppercase tracking-wider rounded-xl transition-colors cursor-pointer"
+                      className="text-[10px] text-slate-400 hover:text-primary font-semibold transition-colors cursor-pointer"
                     >
-                      Book Another Slot
+                      Faire une nouvelle demande
                     </button>
                   </motion.div>
                 )}
               </AnimatePresence>
-              
             </div>
           </div>
-
         </div>
       </div>
     </section>

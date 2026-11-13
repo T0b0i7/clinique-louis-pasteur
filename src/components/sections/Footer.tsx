@@ -1,21 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { HeartPulse, Facebook, Twitter, Instagram, Linkedin, Send, Mail, CheckCircle } from "lucide-react";
+import { MapPin, Phone, Mail, Globe } from "lucide-react";
+import Image from "next/image";
+
+const navigation = [
+  { label: "Accueil", href: "#home" },
+  { label: "La clinique", href: "#about" },
+  { label: "Spécialités", href: "#departments" },
+  { label: "Équipe médicale", href: "#doctors" },
+  { label: "Assurances et paiement", href: "#pricing" },
+  { label: "Guide du patient", href: "#testimonials" },
+];
+
+const specialties = [
+  "Cardiologie",
+  "Gynécologie obstétrique",
+  "Pédiatrie néonatologie",
+  "Chirurgie générale",
+  "Neurochirurgie",
+  "ORL et chirurgie maxillo-faciale",
+];
 
 export default function Footer() {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email) {
-      setSubscribed(true);
-      setEmail("");
-      setTimeout(() => setSubscribed(false), 5000);
-    }
-  };
-
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
     const targetId = href.substring(1);
@@ -38,126 +44,151 @@ export default function Footer() {
     <footer className="bg-navy-dark text-white border-t border-slate-800 relative select-none">
       {/* Footer Top Grid */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 md:py-24 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16">
-        
         {/* Brand Col */}
         <div className="lg:col-span-4 flex flex-col items-start text-left">
-          <div className="flex items-center gap-2 mb-6">
-            <div className="p-2 bg-primary/20 rounded-xl text-primary border border-primary/20">
-              <HeartPulse className="w-6 h-6" />
+          <div className="flex items-center gap-2.5 mb-6">
+            <div className="p-1.5 bg-white rounded-xl">
+              <Image
+                src="/images/logo-clp.png"
+                alt="Logo Clinique Louis Pasteur"
+                width={36}
+                height={36}
+                className="w-8 h-8 object-contain"
+              />
             </div>
-            <span className="font-serif text-2xl font-bold tracking-wide">
-              Medi<span className="text-primary font-sans font-medium">Care</span>
+            <span className="font-serif text-xl font-bold tracking-wide leading-tight">
+              Clinique
+              <span className="block text-primary font-sans font-semibold text-[11px] tracking-wide uppercase">
+                Louis Pasteur
+              </span>
             </span>
           </div>
-          <p className="text-xs text-slate-400 leading-relaxed mb-8 max-w-sm">
-            MediCare leads the frontier of luxury private healthcare, delivering cutting-edge surgeries, expert diagnostics, and compassionate clinical care.
+          <p className="text-xs text-slate-400 leading-relaxed mb-6 max-w-sm">
+            Clinique polyvalente à Porto-Novo depuis 1998. Plus de 20 spécialités, un
+            laboratoire et une radiologie ouverts 24h/24, une maternité et une équipe
+            disponible tous les jours.
           </p>
-          {/* Social Icons */}
-          <div className="flex gap-4">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800 hover:bg-primary rounded-xl text-slate-300 hover:text-white transition-all shadow-sm" aria-label="Facebook link">
-              <Facebook className="w-4 h-4" />
-            </a>
-            <a href="https://twitter.com" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800 hover:bg-primary rounded-xl text-slate-300 hover:text-white transition-all shadow-sm" aria-label="Twitter link">
-              <Twitter className="w-4 h-4" />
-            </a>
-            <a href="https://instagram.com" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800 hover:bg-primary rounded-xl text-slate-300 hover:text-white transition-all shadow-sm" aria-label="Instagram link">
-              <Instagram className="w-4 h-4" />
-            </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="p-2.5 bg-slate-800 hover:bg-primary rounded-xl text-slate-300 hover:text-white transition-all shadow-sm" aria-label="LinkedIn link">
-              <Linkedin className="w-4 h-4" />
-            </a>
+          <div className="flex items-start gap-2 text-[11px] text-slate-400 leading-relaxed">
+            <MapPin className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+            <span>
+              Quartier Djassin, 631 route de Louho
+              <br />
+              Porto-Novo, Bénin. 01 BP 165
+            </span>
           </div>
+          <a
+            href="https://cliniquelouispasteur.bj"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-1.5 mt-5 text-[11px] font-bold text-primary hover:text-accent transition-colors"
+          >
+            <Globe className="w-3.5 h-3.5" />
+            <span>Site officiel de la clinique</span>
+          </a>
         </div>
 
         {/* Quick Links Col */}
         <div className="lg:col-span-2 flex flex-col items-start text-left">
-          <h4 className="text-xs uppercase tracking-widest font-black text-primary mb-6">Quick Navigation</h4>
+          <h4 className="text-xs uppercase tracking-widest font-black text-primary mb-6">
+            Navigation
+          </h4>
           <ul className="space-y-3.5">
-            <li>
-              <a href="#home" onClick={(e) => handleLinkClick(e, "#home")} className="text-xs text-slate-450 hover:text-primary transition-colors font-medium">Home Portal</a>
-            </li>
-            <li>
-              <a href="#about" onClick={(e) => handleLinkClick(e, "#about")} className="text-xs text-slate-450 hover:text-primary transition-colors font-medium">About Hospital</a>
-            </li>
-            <li>
-              <a href="#departments" onClick={(e) => handleLinkClick(e, "#departments")} className="text-xs text-slate-450 hover:text-primary transition-colors font-medium">Specialties</a>
-            </li>
-            <li>
-              <a href="#doctors" onClick={(e) => handleLinkClick(e, "#doctors")} className="text-xs text-slate-450 hover:text-primary transition-colors font-medium">Elite Doctors</a>
-            </li>
-            <li>
-              <a href="#pricing" onClick={(e) => handleLinkClick(e, "#pricing")} className="text-xs text-slate-450 hover:text-primary transition-colors font-medium">Health Packages</a>
-            </li>
+            {navigation.map((item) => (
+              <li key={item.label}>
+                <a
+                  href={item.href}
+                  onClick={(e) => handleLinkClick(e, item.href)}
+                  className="text-xs text-slate-400 hover:text-primary transition-colors font-medium"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Departments Col */}
+        {/* Specialties Col */}
         <div className="lg:col-span-3 flex flex-col items-start text-left">
-          <h4 className="text-xs uppercase tracking-widest font-black text-primary mb-6">Medical Specialties</h4>
+          <h4 className="text-xs uppercase tracking-widest font-black text-primary mb-6">
+            Spécialités
+          </h4>
           <ul className="space-y-3.5">
-            <li>
-              <a href="#departments" onClick={(e) => handleLinkClick(e, "#departments")} className="text-xs text-slate-455 hover:text-primary transition-colors font-medium">Cardiovascular Division</a>
-            </li>
-            <li>
-              <a href="#departments" onClick={(e) => handleLinkClick(e, "#departments")} className="text-xs text-slate-455 hover:text-primary transition-colors font-medium">Brain & Spine Center</a>
-            </li>
-            <li>
-              <a href="#departments" onClick={(e) => handleLinkClick(e, "#departments")} className="text-xs text-slate-455 hover:text-primary transition-colors font-medium">Orthopedics & Joint Care</a>
-            </li>
-            <li>
-              <a href="#departments" onClick={(e) => handleLinkClick(e, "#departments")} className="text-xs text-slate-455 hover:text-primary transition-colors font-medium">Pediatrics & Neonatal Wing</a>
-            </li>
-            <li>
-              <a href="#departments" onClick={(e) => handleLinkClick(e, "#departments")} className="text-xs text-slate-455 hover:text-primary transition-colors font-medium">Cosmetic Dermatology</a>
-            </li>
+            {specialties.map((specialty) => (
+              <li key={specialty}>
+                <a
+                  href="#departments"
+                  onClick={(e) => handleLinkClick(e, "#departments")}
+                  className="text-xs text-slate-400 hover:text-primary transition-colors font-medium"
+                >
+                  {specialty}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 
-        {/* Newsletter subscription Col */}
+        {/* Contact Col */}
         <div className="lg:col-span-3 flex flex-col items-start text-left">
-          <h4 className="text-xs uppercase tracking-widest font-black text-primary mb-6">Health Journal Signup</h4>
-          <p className="text-[11px] text-slate-400 leading-relaxed mb-5">
-            Subscribe to receive diagnostic checkup discounts and monthly medical reports curated by our chief medical board.
-          </p>
-          <form onSubmit={handleSubscribe} className="relative w-full flex flex-col gap-2">
-            <div className="relative flex items-center w-full">
-              <Mail className="absolute left-3 w-4 h-4 text-slate-500" />
-              <input
-                type="email"
-                required
-                placeholder="doctor@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full pl-9 pr-12 py-3 bg-slate-800/80 hover:bg-slate-800 border border-slate-750 focus:border-primary rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none transition-all"
-              />
-              <button
-                type="submit"
-                className="absolute right-1.5 p-2 bg-primary hover:bg-secondary text-white rounded-lg transition-colors cursor-pointer"
-                aria-label="Subscribe button"
+          <h4 className="text-xs uppercase tracking-widest font-black text-primary mb-6">
+            Contact
+          </h4>
+          <ul className="space-y-4 w-full">
+            <li>
+              <a
+                href="tel:+22920212222"
+                className="flex items-start gap-2.5 text-xs text-slate-400 hover:text-primary transition-colors font-medium"
               >
-                <Send className="w-3.5 h-3.5" />
-              </button>
-            </div>
+                <Phone className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <span>
+                  +229 20 21 22 22
+                  <br />
+                  <span className="text-[10px] text-slate-500">
+                    Mobile : +229 95 86 95 25
+                  </span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="tel:+22995621564"
+                className="flex items-start gap-2.5 text-xs text-slate-400 hover:text-primary transition-colors font-medium"
+              >
+                <Phone className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
+                <span>
+                  Ambulance
+                  <br />
+                  <span className="text-[10px] text-slate-500">+229 95 62 15 64</span>
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="mailto:contact@cliniquelouispasteur.com"
+                className="flex items-start gap-2.5 text-xs text-slate-400 hover:text-primary transition-colors font-medium break-all"
+              >
+                <Mail className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" />
+                <span>contact@cliniquelouispasteur.com</span>
+              </a>
+            </li>
+          </ul>
 
-            {subscribed && (
-              <div className="flex items-center gap-1.5 text-xs text-emerald-450 mt-1">
-                <CheckCircle className="w-4 h-4" />
-                <span>Subscription Active!</span>
-              </div>
-            )}
-          </form>
+          <div className="mt-6 p-3 rounded-xl bg-slate-800/60 border border-slate-700/60 w-full">
+            <p className="text-[10px] font-bold text-slate-300 uppercase tracking-wider mb-1">
+              Accueil téléphonique
+            </p>
+            <p className="text-[11px] text-emerald-400 font-bold">24h/24 et 7j/7</p>
+          </div>
         </div>
-
       </div>
 
       {/* Footer Bottom Row */}
       <div className="border-t border-slate-800 py-8 bg-slate-950 select-none">
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
           <span className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">
-            Copyright &copy; {new Date().getFullYear()} MediCare Hospital Group. All rights reserved.
+            Copyright &copy; {new Date().getFullYear()} Clinique Louis Pasteur. Tous droits réservés.
           </span>
           <span className="text-[10px] text-slate-500 font-medium">
-            Accredited by Joint Commission International &bull; HIPAA Compliant
+            Autorisation d&apos;ouverture numéro 0793/MSP/DC/SGM/DNPS/SHMNT du 12 décembre 2003
           </span>
         </div>
       </div>

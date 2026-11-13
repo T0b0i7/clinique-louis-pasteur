@@ -22,11 +22,14 @@ export default function FloatingEmergency() {
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <div className="flex items-center gap-2">
                 <AlertCircle className="w-5 h-5 text-red-500 animate-pulse" />
-                <span className="font-sans font-bold text-navy-dark text-sm">Emergency Hotlines</span>
+                <span className="font-sans font-bold text-navy-dark text-sm">
+                  Urgences 24h/24
+                </span>
               </div>
               <button
                 onClick={() => setIsOpen(false)}
                 className="p-1 hover:bg-slate-100 rounded-full text-slate-400 hover:text-slate-600 transition-colors"
+                aria-label="Fermer"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -36,13 +39,15 @@ export default function FloatingEmergency() {
             <div className="space-y-4 pt-3">
               <div>
                 <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block mb-1">
-                  Ambulance & Trauma
+                  Ambulance
                 </span>
                 <a
-                  href="tel:18005550199"
+                  href="tel:+22995621564"
                   className="flex items-center justify-between p-2.5 bg-red-50/50 hover:bg-red-50 rounded-xl group transition-all"
                 >
-                  <span className="font-mono font-bold text-red-600 text-lg">1-800-555-0199</span>
+                  <span className="font-mono font-bold text-red-600 text-lg">
+                    +229 95 62 15 64
+                  </span>
                   <div className="p-1.5 bg-red-500 rounded-lg group-hover:scale-110 transition-transform">
                     <Phone className="w-3.5 h-3.5 text-white" />
                   </div>
@@ -51,13 +56,15 @@ export default function FloatingEmergency() {
 
               <div>
                 <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400 block mb-1">
-                  Emergency ER Desk
+                  Accueil de la clinique
                 </span>
                 <a
-                  href="tel:18005550122"
+                  href="tel:+22920212222"
                   className="flex items-center justify-between p-2.5 bg-slate-50 hover:bg-slate-100 rounded-xl group transition-all"
                 >
-                  <span className="font-mono font-bold text-navy-dark text-base">1-800-555-0122</span>
+                  <span className="font-mono font-bold text-navy-dark text-base">
+                    +229 20 21 22 22
+                  </span>
                   <div className="p-1.5 bg-slate-200 rounded-lg group-hover:scale-110 transition-transform">
                     <Phone className="w-3.5 h-3.5 text-slate-600" />
                   </div>
@@ -65,8 +72,8 @@ export default function FloatingEmergency() {
               </div>
 
               <div className="flex items-center gap-1.5 text-xs text-slate-500 bg-slate-50 p-2 rounded-lg">
-                <Clock className="w-3.5 h-3.5 text-primary" />
-                <span>24/7 Response. Average wait &lt; 2 mins.</span>
+                <Clock className="w-3.5 h-3.5 text-primary flex-shrink-0" />
+                <span>Ambulance disponible 24h/24 et 7j/7.</span>
               </div>
             </div>
           </motion.div>
@@ -79,14 +86,16 @@ export default function FloatingEmergency() {
         whileTap={{ scale: 0.95 }}
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 px-4 py-3 bg-red-500 hover:bg-red-600 text-white rounded-full shadow-lg hover:shadow-red-500/20 cursor-pointer focus:outline-none transition-all"
-        aria-label="Emergency helpline"
+        aria-label="Numéros d'urgence"
       >
         <span className="relative flex h-3 w-3">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
           <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
         </span>
         <Phone className="w-4 h-4 text-white" />
-        <span className="font-sans font-bold text-xs uppercase tracking-wider">Emergency 24/7</span>
+        <span className="font-sans font-bold text-xs uppercase tracking-wider">
+          Urgences 24h/24
+        </span>
       </motion.button>
     </div>
   );

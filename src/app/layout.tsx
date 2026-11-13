@@ -15,29 +15,41 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "MediCare Hospital | Advanced Healthcare, Compassionate Care",
-  description: "Experience luxury, modern, and production-quality healthcare at MediCare Hospital. Featuring advanced medical technologies, world-class specialists, and customized treatment programs.",
-  keywords: ["MediCare Hospital", "luxury healthcare", "advanced medical technology", "best cardiologists", "modern surgery clinic", "private hospital", "expert doctors"],
-  authors: [{ name: "MediCare Hospital Editorial Team" }],
-  creator: "MediCare Hospital",
-  publisher: "MediCare Hospital Group",
+  title: "Clinique Louis Pasteur | Porto-Novo, Bénin",
+  description:
+    "Clinique polyvalente à Porto-Novo depuis 1998. Plus de 20 spécialités, laboratoire et radiologie 24h/24, maternité, hospitalisation, ambulance et examens médicaux pour l'immigration canadienne.",
+  keywords: [
+    "Clinique Louis Pasteur",
+    "clinique Porto-Novo",
+    "hôpital Porto-Novo",
+    "santé Bénin",
+    "maternité Porto-Novo",
+    "examens immigration Canada",
+    "laboratoire 24h",
+    "radiologie Porto-Novo",
+  ],
+  authors: [{ name: "Clinique Louis Pasteur" }],
+  creator: "Clinique Louis Pasteur",
+  publisher: "Clinique Louis Pasteur",
   formatDetection: {
     email: false,
     address: true,
     telephone: true,
   },
   openGraph: {
-    title: "MediCare Hospital | Advanced Healthcare & Compassionate Care",
-    description: "Welcome to MediCare Hospital, offering state-of-the-art diagnostics, treatments, and compassionate patient recovery plans. Discover our departments, elite doctors, and custom checkup packages.",
-    url: "https://medicare-hospital.vercel.app",
-    siteName: "MediCare Hospital",
-    locale: "en_US",
+    title: "Clinique Louis Pasteur | Porto-Novo, Bénin",
+    description:
+      "Une clinique polyvalente au service des patients depuis 1998. Spécialités, maternité, hospitalisation, laboratoire et radiologie 24h/24 à Porto-Novo.",
+    url: "https://cliniquelouispasteur.bj",
+    siteName: "Clinique Louis Pasteur",
+    locale: "fr_FR",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MediCare Hospital | Modern Private Healthcare",
-    description: "Experience premium, state-of-the-art medical services at MediCare Hospital.",
+    title: "Clinique Louis Pasteur | Porto-Novo, Bénin",
+    description:
+      "Plus de 20 spécialités, des urgences 24h/24 et des examens d'immigration Canada à Porto-Novo.",
   },
   robots: {
     index: true,
@@ -57,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="fr" className="scroll-smooth">
       <body
         className={`${playfair.variable} ${inter.variable} antialiased text-navy-dark bg-hospital-bg font-sans selection:bg-primary/20 selection:text-secondary`}
       >

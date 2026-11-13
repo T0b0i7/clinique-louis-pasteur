@@ -1,281 +1,70 @@
-# 🏥 MediCare Hospital
+# Clinique Louis Pasteur
 
-A premium, fully responsive hospital and healthcare website built for multi-specialty hospitals, medical centers, healthcare clinics, and private healthcare organizations. Developed with Next.js, TypeScript, Tailwind CSS, and Framer Motion, the website provides an elegant healthcare experience with department showcases, doctor profiles, appointment booking, health packages, patient testimonials, and a modern responsive UI.
+Refonte du site de la Clinique Louis Pasteur, clinique polyvalente située au quartier Djassin, 631 route de Louho, Porto-Novo au Bénin.
 
-🔗 **Live Demo:** https://medicare-hospital1.vercel.app
+Le projet reprend le template [medicare-hospital](https://github.com/Pulipati-Rahul/medicare-hospital) (Next.js 15, React 19, Tailwind CSS 4, Framer Motion) et remplace tout le contenu par des informations réelles, en français.
 
----
-
-# 📖 About the Project
-
-MediCare Hospital was designed to provide modern healthcare organizations with a trustworthy and professional online presence.
-
-Visitors can explore hospital departments, meet experienced doctors, book appointments, discover health packages, read patient testimonials, browse FAQs, and easily contact the hospital through a clean and intuitive interface.
-
-This project was built to strengthen my frontend development skills using reusable React components, responsive layouts, premium UI/UX design, accessibility best practices, smooth animations, and production-ready web development.
-
----
-
-# ✨ Features
-
-### 🏥 Modern Landing Page
-
-- Premium hero section
-- Hospital statistics
-- Emergency support CTA
-- Smooth animations
-- Modern responsive layout
-
-### 🩺 Medical Departments
-
-- Department showcase
-- Department cards
-- Service descriptions
-- Premium UI
-
-### 👨‍⚕️ Expert Doctors
-
-- Doctor profiles
-- Experience details
-- Specializations
-- Appointment buttons
-
-### ❤️ Health Packages
-
-- Preventive health packages
-- Medical checkup plans
-- Pricing cards
-- Membership plans
-
-### ⭐ Why Choose Us
-
-- Emergency services
-- Expert medical staff
-- Modern equipment
-- Patient-centered care
-- Advanced technology
-
-### 💬 Patient Testimonials
-
-- Patient reviews
-- Success stories
-- Ratings
-- Trust indicators
-
-### 📅 Appointment Booking
-
-- Appointment form
-- Department selection
-- Doctor selection
-- Contact details
-
-### 📞 Contact & Emergency
-
-- Contact form
-- Google Maps integration
-- Hospital location
-- Emergency contact
-- Working hours
-
-### 🎨 User Experience
-
-- Fully responsive design
-- Mobile-first layout
-- Sticky navigation
-- Scroll animations
-- Loading animation
-- Premium UI/UX
-
----
-
-# 🛠 Tech Stack
-
-## Frontend
-
-- Next.js
-- React
-- TypeScript
-- Tailwind CSS
-
-## UI & Animations
-
-- Framer Motion
-- Lucide React
-
-## Deployment
-
-- Vercel
-
----
-
-# 📸 Screenshots
-
-### 🏠 Home & About
-
-| Home | About |
-|------|-------|
-| ![](screenshots/01-home.png) | ![](screenshots/02-about.png) |
-
----
-
-### 🩺 Departments & Doctors
-
-| Departments | Doctors |
-|-------------|----------|
-| ![](screenshots/03-departments.png) | ![](screenshots/04-doctors.png) |
-
----
-
-### ❤️ Why Choose Us &  Health Packages
-
-| Why Choose Us | Health Packages |
-|----------------|---------------|
-| ![](screenshots/05-why-us.png) | ![](screenshots/06-packages.png) |
-
----
-
-### 💬 faqs & Appointment
-
-| faqs | Appointment |
-|--------------|-------------|
-| ![](screenshots/07-faqs.png) | ![](screenshots/08-book-appointment.png) |
-
----
-
-### ❓ FAQ & Contact
-
-| Contact |
-|-------------|
-| ![](screenshots/09-contact.png) | 
-
----
-
-### 📱 Mobile Preview
-
-<p align="center">
-  <img src="screenshots/10-mobile-preview.png" alt="Mobile Preview" width="300">
-</p>
-
----
-
-# 📂 Project Structure
-
-```text
-medicare-hospital
-│
-├── public
-│   ├── images
-│   └── icons
-│
-├── src
-│   ├── app
-│   ├── components
-│   │   ├── common
-│   │   ├── sections
-│   │   └── ui
-│   ├── hooks
-│   └── utils
-│
-├── screenshots
-│
-└── README.md
-```
-
----
-
-# ⚙️ Installation
-
-## Clone the repository
-
-```bash
-git clone https://github.com/Pulipati-Rahul/medicare-hospital.git
-```
-
-## Navigate into the project
-
-```bash
-cd medicare-hospital
-```
-
-## Install dependencies
+## Lancer le projet
 
 ```bash
 npm install
-```
-
----
-
-# ▶️ Running the Project
-
-```bash
 npm run dev
 ```
 
-Runs on:
+Le site est disponible sur http://localhost:3000.
 
-```text
-http://localhost:3000
+Pour vérifier le build de production :
+
+```bash
+npm run build
 ```
 
----
+## Contenu
 
-# 🌍 Live Deployment
+Le site est une page unique découpée en sections :
 
-https://medicare-hospital1.vercel.app
+- Accueil et présentation de la clinique
+- La clinique, son histoire et ses valeurs
+- Spécialités et services
+- Équipe médicale et examens d'immigration Canada
+- Pourquoi choisir la clinique
+- Assurances et moyens de paiement
+- Guide du patient
+- Questions fréquentes
+- Demande de rendez-vous
+- Contact et carte
 
----
+## Sources des informations
 
-# 💡 What I Learned
+Les informations publiées proviennent du site officiel de la clinique :
 
-While building this project, I learned:
+- https://cliniquelouispasteur.bj/
+- https://cliniquelouispasteur.bj/guide-du-patient/
+- https://cliniquelouispasteur.bj/services/liste-specialites/
 
-- Building premium healthcare websites
-- Modern Next.js architecture
-- Component-based UI development
-- Responsive web design
-- Framer Motion animations
-- Tailwind CSS best practices
-- Mobile-first development
-- Accessible UI design
-- SEO-friendly page structure
-- Deployment using Vercel
+Les images du logo, de la façade et de la carte sont utilisées à partir de sources publiques. La carte est issue d'OpenStreetMap.
 
----
+## Points à confirmer avec la clinique
 
-# 🚀 Future Improvements
+- Les horaires des praticiens peuvent changer. Ils sont affichés à titre indicatif et doivent être confirmés par téléphone.
+- Les tarifs ne sont pas publiés. La section paiement présente uniquement les moyens de règlement et le tiers payant.
+- Le formulaire de rendez-vous ne réserve pas de créneau automatiquement. Il prépare une demande à envoyer par email ou à confirmer par téléphone.
+- La liste des assureurs partenaires n'est pas publiée sur le site. Elle est à demander à l'accueil.
 
-- Online patient portal
-- Doctor appointment management
-- Online consultation
-- Electronic medical records integration
-- Patient dashboard
-- Payment gateway
-- Health blog
-- Multi-language support
-- Hospital CMS
-- Email notifications
+## Coordonnées
 
----
+- Adresse : Quartier Djassin, 631 route de Louho, Porto-Novo, Bénin
+- Téléphone : +229 20 21 22 22
+- Mobile : +229 95 86 95 25
+- Ambulance : +229 95 62 15 64
+- Email : contact@cliniquelouispasteur.com
+- Autorisation d'ouverture : 0793/MSP/DC/SGM/DNPS/SHMNT du 12 décembre 2003
 
-# 👨‍💻 Author
+## Structure
 
-**Pulipati Rahul**
-
-Full Stack Developer
-
-GitHub:  
-https://github.com/Pulipati-Rahul
-
-LinkedIn:  
-https://www.linkedin.com/in/pulipatirahul
-
-Portfolio:  
-https://pulipatirahul.vercel.app
-
----
-
-# ⭐ Support
-
-If you found this project helpful, consider giving it a ⭐ on GitHub.
-
-It motivates me to continue building high-quality projects.
+```text
+src/app/                 Layout, page et fichiers SEO
+src/components/          Navigation, chargeur, urgences, retour en haut
+src/components/sections/ Sections de la page
+public/images/           Logo, façade et carte
+```

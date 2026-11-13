@@ -4,7 +4,6 @@ import { useState } from "react";
 import { HelpCircle, ChevronDown, Sparkles } from "lucide-react";
 import { motion as motionFM, AnimatePresence as AnimatePresenceFM } from "framer-motion";
 
-
 interface FAQItem {
   question: string;
   answer: string;
@@ -12,28 +11,39 @@ interface FAQItem {
 
 const faqs: FAQItem[] = [
   {
-    question: "What insurance providers do you accept?",
-    answer: "We partner with all major national and international healthcare insurance providers. Our billing desk provides direct, seamless claim submissions to minimize out-of-pocket delays.",
+    question: "Comment prendre rendez-vous à la clinique ?",
+    answer:
+      "L'accueil téléphonique est disponible 24h/24 et 7j/7 au +229 20 21 22 22 ou au +229 95 86 95 25. Vous pouvez aussi écrire à contact@cliniquelouispasteur.com ou remplir le formulaire de la page. Les consultations et examens sont accessibles avec ou sans rendez-vous, mais prendre rendez-vous est toujours préférable.",
   },
   {
-    question: "Can I consult a doctor online?",
-    answer: "Yes, MediCare supports secure, encrypted teleconsultations. You can speak with our specialists online, receive prescriptions, and schedule follow-ups from anywhere.",
+    question: "Quels sont les horaires de visite aux patients hospitalisés ?",
+    answer:
+      "Les visites sont organisées en trois tranches : le matin de 7h30 à 9h, à midi de 12h à 14h et le soir de 18h30 à 21h. Merci de respecter ces horaires pour le repos des patients.",
   },
   {
-    question: "How do I request a copy of my medical records?",
-    answer: "Medical records can be requested by contacting our Patient Support wing or via our secure web portals. Requests are verified and processed within 24-48 business hours.",
+    question: "Faut-il être à jeun pour les analyses de laboratoire ?",
+    answer:
+      "Beaucoup d'examens de laboratoire demandent d'être à jeun. Les prélèvements sont effectués 24h/24 et 7j/7. La plupart des résultats sont disponibles le même jour. En cas de doute, appelez la clinique avant votre venue.",
   },
   {
-    question: "What are the general hospital visiting hours?",
-    answer: "General wings welcome visitors from 10:00 AM to 8:00 PM daily. To ensure safety and healing, Intensive Care Units (ICU) restrict visiting hours to 12:00 PM - 2:00 PM and 5:00 PM - 7:00 PM.",
+    question: "Comment se déroulent les examens d'immigration Canada ?",
+    answer:
+      "Les examens médicaux aux fins d'immigration (EMI) sont réalisés pour le compte de Citoyenneté Immigration Canada par les docteurs Véronique Dossou-Gbete et Lucien Dossou-Gbete, exclusivement sur rendez-vous. Prévoyez le formulaire IMM 1017, une pièce d'identité originale valide, 3 photos au format passeport, les frais d'examen et tout document lié à votre santé. Il n'est pas nécessaire d'être à jeun.",
   },
   {
-    question: "Do you have emergency ambulance services?",
-    answer: "Yes, our mobile intensive care units are active 24/7. Each ambulance is staffed by certified paramedics and equipped with live telemetry feeding vital stats straight to the waiting ER team.",
+    question: "Quels moyens de paiement acceptez-vous ?",
+    answer:
+      "Vous pouvez régler en espèces, par chèque ou par mobile banking. Pour les patients assurés, seul le tiers payant est exigé, selon la liste des partenaires de la clinique. En cas d'hospitalisation, une provision est demandée et un point financier est réalisé chaque jour.",
   },
   {
-    question: "Is patient parking available at the hospital?",
-    answer: "Yes, MediCare offers secure, complimentary multi-story parking for patients and visitors, alongside round-the-clock valet services at the main entrance.",
+    question: "Peut-on faire une radiographie sans rendez-vous ?",
+    answer:
+      "Oui pour les radiographies simples : aucune préparation n'est nécessaire et vous pouvez vous présenter 24h/24 et 7j/7. Pour les radiographies avec produit de contraste (HSG, UIV, UCR, TOGD, LB), il est préférable de prendre rendez-vous. Les échographies se font sur rendez-vous.",
+  },
+  {
+    question: "Comment joindre l'ambulance ?",
+    answer:
+      "L'ambulance de la clinique est joignable au +229 95 62 15 64. Elle peut aussi être utilisée pour le transport de malades entre établissements de soins. Dans ce cas, le service doit être réglé à la clinique avant le départ de l'ambulance.",
   },
 ];
 
@@ -60,7 +70,7 @@ export default function FAQ() {
             className="inline-flex items-center gap-1.5 px-3 py-1 bg-primary/10 rounded-full text-primary font-bold text-xs uppercase tracking-wider mb-4"
           >
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Frequently Asked Questions</span>
+            <span>Questions fréquentes</span>
           </motionFM.div>
           <motionFM.h2
             initial={{ opacity: 0, y: 20 }}
@@ -69,10 +79,10 @@ export default function FAQ() {
             transition={{ duration: 0.6 }}
             className="font-serif text-4xl md:text-5xl font-bold text-navy-dark tracking-tight"
           >
-            Clear Answers for Your
+            Des réponses claires
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary font-sans font-medium italic">
-              Peace of Mind.
+              pour votre visite.
             </span>
           </motionFM.h2>
         </div>
@@ -133,6 +143,19 @@ export default function FAQ() {
               </motionFM.div>
             );
           })}
+        </div>
+
+        <div className="mt-10 text-center">
+          <p className="text-xs text-slate-500">
+            Une autre question ? Appelez le{" "}
+            <a href="tel:+22920212222" className="font-bold text-primary">
+              +229 20 21 22 22
+            </a>{" "}
+            ou écrivez à{" "}
+            <a href="mailto:contact@cliniquelouispasteur.com" className="font-bold text-primary">
+              contact@cliniquelouispasteur.com
+            </a>.
+          </p>
         </div>
       </div>
     </section>
